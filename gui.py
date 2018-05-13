@@ -4,11 +4,14 @@ from itertools import count
 
 
 class ImageLabel(tk.Label):
-    """a label that displays images, and plays them if they are gifs"""
+    """
+   Class that displays moving gifs.
+   """
 
     def load(self, im):
         if isinstance(im, str):
             im = Image.open(im)
+
         self.loc = 0
         self.frames = []
 
@@ -41,8 +44,17 @@ class ImageLabel(tk.Label):
             self.after(self.delay, self.next_frame)
 
 
-root = tk.Tk()
-lbl = ImageLabel(root)
-lbl.pack()
-lbl.load('MxTk.gif')
-root.mainloop()
+def gif():
+    root = tk.Tk()
+    label = ImageLabel(root)
+    label.pack()
+    label.load('MxTk.gif')
+    root.mainloop()
+
+
+def image():
+    root = tk.Tk()
+    my_image = tk.PhotoImage(file="MxTk.gif")
+    label = tk.Label(image=my_image)
+    label.pack()
+    root.mainloop()
