@@ -1,44 +1,23 @@
-# TODO: implement speaking
+# do this
+# mkdir tmp_mbrola
+# cd tmp_mbrola
+# wget http://www.tcts.fpms.ac.be/synthesis/mbrola/bin/pclinux/mbr301h.zip
+# unzip mbr301h.zip
+# sudo cp mbrola-linux-i386 /usr/bin/mbrola
+# wget http://www.tcts.fpms.ac.be/synthesis/mbrola/dba/en1/en1-980910.zip
+# unzip en1-980910.zip
+# sudo mkdir /usr/share/mbrola
+# sudo cp en1/en1 /usr/share/mbrola/en1
+# cd ..
+# sudo rm -Rf ./tmp_mbrola/
+# espeak -v mb-en1 -s 160 "Hello world"
 
-import talkey
-tts = talkey.Talkey(
-    # These languages are given better scoring by the language detector
-    # to minimise the chance of it detecting a short string completely incorrectly.
-    # Order is not important here
-    preferred_languages=['bs'],
+# command: espeak -v mb-en1 -a 200 -s 150 "Hello world" -> super podesavanja za musko
+# ili za zensko: espeak -v mb-en1+f4 -a 200 -s 130 "Hello world." -> za zensko
 
-    # The factor by which preferred_languages gets their score increased, defaults to 80.0
-    preferred_factor=80.0,
+import os
 
-    # The order of preference of using a TTS engine for a given language.
-    # Note, that networked engines (Google, Mary) is disabled by default, and so is dummy
-    # default: ['google', 'mary', 'espeak', 'festival', 'pico', 'flite', 'dummy']
-    # This sets eSpeak as the preferred engine, the other engines may still be used
-    #  if eSpeak doesn't support a requested language.
-    engine_preference=['espeak'],
 
-    # Here you segment the configuration by engine
-    # Key is the engine SLUG, in this case ``espeak``
-    espeak={
-        # Specify the engine options:
-        'options': {
-            'enabled': True,
-        },
-
-        # Specify some default voice options
-        'defaults': {
-                'words_per_minute': 150,
-                'variant': 'f4',
-        },
-
-        # Here you specify language-specific voice options
-        # e.g. for english we prefer the mbrola en1 voice
-        'languages': {
-            'en': {
-                'voice': 'bs',
-                'words_per_minute': 130
-            },
-        }
-    }
-)
-tts.say('Old McDonald had a farm')
+def say(text):
+    command = "espeak -v mb-en1+f4 -s 110 -a 200 '" + text + "'"
+    os.system(command)
